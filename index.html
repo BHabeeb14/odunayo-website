@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Odunayo, My Heart</title>
+  <!-- Google Fonts for Dancing Script and Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto&display=swap" rel="stylesheet">
+  <!-- Typed.js for typing animation -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <!-- Canvas Confetti for surprise effects -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #DBEAFE, #A855F7);
+      color: #fff;
+    }
+    header {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3em;
+    }
+    section {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #3B82F6;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px;
+    }
+    .timeline-card, .surprise-card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    form {
+      margin-top: 20px;
+    }
+    input, textarea {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      background: #3B82F6;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>To Odunayo, My Heart</h1>
+  </header>
+
+  <!-- Love Letter Section -->
+  <section id="love-letter">
+    <h2>A Message for You</h2>
+    <div id="typed-output"></div>
+    <a href="https://www.youtube.com/watch?v=placeholder" target="_blank" class="button">Play "Sweet One" by Wizkid</a>
+    <a href="https://www.youtube.com/watch?v=placeholder" target="_blank" class="button">Play "Mrs Me" by Nasty C</a>
+  </section>
+
+  <!-- Timeline Section -->
+  <section id="timeline">
+    <h2>Our Story</h2>
+    <div class="timeline-card">
+      <h3>Our First Moment</h3>
+      <p>When I saw your smile and knew you were special.</p>
+    </div>
+    <div class="timeline-card">
+      <h3>A Special Day</h3>
+      <p>When you showed me your kindness and stole my heart.</p>
+    </div>
+    <div class="timeline-card">
+      <h3>A Memory I Cherish</h3>
+      <p>The way you laughed and made everything better.</p>
+    </div>
+  </section>
+
+  <!-- Gift Hub Section -->
+  <section id="gift-hub">
+    <h2>Surprise Box</h2>
+    <div class="surprise-card" id="surprise-1">
+      <h3>Why I Love You</h3>
+      <p>Your lips, your face, and how you treat me make my world brighter.</p>
+    </div>
+    <div class="surprise-card" id="surprise-2">
+      <h3>Our Song</h3>
+      <p>Listen to "Sweet One" – it reminds me of you.</p>
+    </div>
+    <div class="surprise-card" id="surprise-3">
+      <h3>Mini Quiz</h3>
+      <p>What makes Odunayo so special? (Click to find out!)</p>
+    </div>
+  </section>
+
+  <!-- Dream Date Planner Section -->
+  <section id="dream-date">
+    <h2>Our Next Adventure</h2>
+    <p>Evening: Dinner at a cozy restaurant with your favorite food.</p>
+    <p>Night: Stargazing under a blanket, just us.</p>
+    <form id="dream-date-form">
+      <label for="dream-date-input">Your Dream Date Idea:</label><br>
+      <textarea id="dream-date-input" rows="4" cols="50" placeholder="Tell me your dream date..."></textarea><br>
+      <button type="submit">Save Idea</button>
+    </form>
+  </section>
+
+  <!-- Fan Page Section -->
+  <section id="fan-page">
+    <h2>Why Odunayo Is Amazing</h2>
+    <ul>
+      <li>Your lips: They light up my world with every smile.</li>
+      <li>Your face: I could look at you forever and never get tired.</li>
+      <li>How you treat me: Your kindness makes me want to be better.</li>
+    </ul>
+    <form id="guestbook-form">
+      <label for="guestbook-input">Leave a Note:</label><br>
+      <textarea id="guestbook-input" rows="4" cols="50" placeholder="Type a note to me..."></textarea><br>
+      <button type="submit">Submit Note</button>
+    </form>
+  </section>
+</body>
+</html>
