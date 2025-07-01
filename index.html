@@ -93,6 +93,8 @@
       margin: 15px 0;
       border-radius: 10px;
       transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      cursor: pointer;
     }
     .timeline-card:hover, .surprise-card:hover {
       transform: translateY(-5px);
@@ -106,6 +108,15 @@
     .timeline-card p, .surprise-card p {
       font-size: 1.1em;
       color: #E5E7EB;
+    }
+    .timeline-card .hidden-note {
+      display: none;
+      font-style: italic;
+      color: #F9EAFB;
+      margin-top: 10px;
+    }
+    .timeline-card:hover .hidden-note {
+      display: block;
     }
     form {
       margin-top: 20px;
@@ -136,6 +147,11 @@
     }
     button:hover {
       background: #2563EB;
+    }
+    .form-message {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #F9EAFB;
     }
     ul {
       list-style: none;
@@ -182,14 +198,17 @@
     <div class="timeline-card">
       <h3>Our First Moment</h3>
       <p>When I saw your smile and knew you were special.</p>
+      <p class="hidden-note">I miss you every day.</p>
     </div>
     <div class="timeline-card">
       <h3>A Special Day</h3>
       <p>When you showed me your kindness and stole my heart.</p>
+      <p class="hidden-note">I'm so sorry for my mistakes.</p>
     </div>
     <div class="timeline-card">
       <h3>A Memory I Cherish</h3>
       <p>The way you laughed and made everything better.</p>
+      <p class="hidden-note">Please give me a chance, babe.</p>
     </div>
   </section>
 
@@ -207,6 +226,7 @@
     <div class="surprise-card" id="surprise-3">
       <h3>Mini Quiz</h3>
       <p>What makes Odunayo so special? (Click to find out!)</p>
+      <p class="hidden-note" style="display: none;">Everything about you, especially how you treat me!</p>
     </div>
   </section>
 
@@ -219,6 +239,7 @@
       <label for="dream-date-input">Your Dream Date Idea:</label><br>
       <textarea id="dream-date-input" rows="4" cols="50" placeholder="Tell me your dream date..."></textarea><br>
       <button type="submit">Save Idea</button>
+      <p class="form-message" id="dream-date-message"></p>
     </form>
   </section>
 
@@ -234,7 +255,85 @@
       <label for="guestbook-input">Leave a Note:</label><br>
       <textarea id="guestbook-input" rows="4" cols="50" placeholder="Type a note to me..."></textarea><br>
       <button type="submit">Submit Note</button>
+      <p class="form-message" id="guestbook-message"></p>
     </form>
   </section>
+
+  <script>
+    // Typing Animation for Love Letter
+    const typed = new Typed('#typed-output', {
+      strings: [
+        'To Odunayo, my heart, I love you and I’m so sorry for everything I’ve done wrong. I miss you every day and want to make things right. Please give me a chance, babe.'
+      ],
+      typeSpeed: 50,
+      startDelay: 500,
+      showCursor: false,
+      loop: false
+    });
+
+    // Confetti for Gift Hub Cards
+    document.querySelectorAll('.surprise-card').forEach(card => {
+      card.addEventListener('click', () => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#A855F7', '#3B82F6', '#F9EAFB']
+        });
+        if (card.id === 'surprise-3') {
+          const hiddenNote = card.querySelector('.hidden-note');
+          hiddenNote.style.display = 'block';
+        }
+      });
+    });
+
+    // Form Handling for Dream Date
+    const dreamDateForm = document.getElementById('dream-date-form');
+    const dreamDateInput = document.getElementById('dream-date-input');
+    const dreamDateMessage = document.getElementById('dream-date-message');
+    dreamDateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = dreamDateInput.value.trim();
+      if (input) {
+        localStorage.setItem('dreamDate', input);
+        dreamDateMessage.textContent = 'Your dream date idea has been saved, Odunayo!';
+        dreamDateInput.value = '';
+        setTimeout(() => { dreamDateMessage.textContent = ''; }, 3000);
+      } else {
+        dreamDateMessage.textContent = 'Please enter a dream date idea!';
+        setTimeout(() => { dreamDateMessage.textContent = ''; }, 3000);
+      }
+    });
+
+    // Form Handling for Guestbook
+    const guestbookForm = document.getElementById('guestbook-form');
+    const guestbookInput = document.getElementById('guestbook-input');
+    const guestbookMessage = document.getElementById('guestbook-message');
+    guestbookForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = guestbookInput.value.trim();
+      if (input) {
+        localStorage.setItem('guestbookNote', input);
+        guestbookMessage.textContent = 'Thank you for your note, Odunayo!';
+        guestbookInput.value = '';
+        setTimeout(() => { guestbookMessage.textContent = ''; }, 3000);
+      } else {
+        guestbookMessage.textContent = 'Please enter a note!';
+        setTimeout(() => { guestbookMessage.textContent = ''; }, 3000);
+      }
+    });
+
+    // Load Saved Form Data (if any)
+    window.addEventListener('load', () => {
+      const savedDreamDate = localStorage.getItem('dreamDate');
+      if (savedDreamDate) {
+        dreamDateMessage.textContent = `Saved Dream Date: ${savedDreamDate}`;
+      }
+      const savedGuestbookNote = localStorage.getItem('guestbookNote');
+      if (savedGuestbookNote) {
+        guestbookMessage.textContent = `Saved Note: ${savedGuestbookNote}`;
+      }
+    });
+  </script>
 </body>
 </html>
