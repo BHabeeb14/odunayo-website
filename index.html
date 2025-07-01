@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To Odunayo, My Heart</title>
+  <!-- Favicon (Heart Icon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23A855F7'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
   <!-- Google Fonts for Dancing Script and Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto&display=swap" rel="stylesheet">
-  <!-- Typed.js for typing animation -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <!-- Canvas Confetti for surprise effects -->
+  <!-- Typed.js for typing animation (minified) -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+  <!-- Canvas Confetti for surprise effects (minified) -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -24,6 +26,37 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+    }
+    /* Loading Screen */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #A855F7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 0.5s ease-out;
+    }
+    #loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loading-heart {
+      width: 40px;
+      height: 40px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+      background-size: contain;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
     /* Falling Hearts Animation */
     .hearts {
@@ -41,7 +74,7 @@
       height: 20px;
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255, 100, 100, 0.7)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
       background-size: contain;
-      animation: fall 10s linear infinite;
+      animation: fall 12s linear infinite;
       opacity: 0.7;
     }
     @keyframes fall {
@@ -81,9 +114,9 @@
       text-decoration: none;
       border-radius: 8px;
       margin: 10px;
-      transition: background 0.3s, transform 0.2s;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
-    .button:hover {
+    .button:hover, .button:focus {
       background: #2563EB;
       transform: scale(1.05);
     }
@@ -92,11 +125,11 @@
       padding: 20px;
       margin: 15px 0;
       border-radius: 10px;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       cursor: pointer;
     }
-    .timeline-card:hover, .surprise-card:hover {
+    .timeline-card:hover, .timeline-card:focus, .surprise-card:hover, .surprise-card:focus {
       transform: translateY(-5px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
@@ -115,7 +148,7 @@
       color: #F9EAFB;
       margin-top: 10px;
     }
-    .timeline-card:hover .hidden-note {
+    .timeline-card:hover .hidden-note, .timeline-card:focus .hidden-note {
       display: block;
     }
     form {
@@ -143,15 +176,16 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s ease;
     }
-    button:hover {
+    button:hover, button:focus {
       background: #2563EB;
     }
     .form-message {
       margin-top: 10px;
       font-size: 1em;
       color: #F9EAFB;
+      transition: opacity 0.5s ease;
     }
     ul {
       list-style: none;
@@ -173,6 +207,10 @@
   </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-heart"></div>
+  </div>
   <div class="hearts">
     <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
     <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
@@ -181,31 +219,31 @@
     <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
   </div>
   <header>
-    <h1>To Odunayo, My Heart</h1>
+    <h1 aria-label="To Odunayo, My Heart">To Odunayo, My Heart</h1>
   </header>
 
   <!-- Love Letter Section -->
-  <section id="love-letter">
-    <h2>A Message for You</h2>
-    <div id="typed-output"></div>
-    <a href="https://music.apple.com/ng/song/sweet-one/1538020509" target="_blank" class="button">Play "Sweet One" by Wizkid</a>
-    <a href="https://music.apple.com/ng/song/mrs-me/1400930740" target="_blank" class="button">Play "Mrs Me" by Nasty C</a>
+  <section id="love-letter" aria-labelledby="love-letter-heading">
+    <h2 id="love-letter-heading">A Message for You</h2>
+    <div id="typed-output" role="region" aria-live="polite"></div>
+    <a href="https://music.apple.com/ng/song/sweet-one/1538020509" target="_blank" class="button" aria-label="Play Sweet One by Wizkid">Play "Sweet One" by Wizkid</a>
+    <a href="https://music.apple.com/ng/song/mrs-me/1400930740" target="_blank" class="button" aria-label="Play Mrs Me by Nasty C">Play "Mrs Me" by Nasty C</a>
   </section>
 
   <!-- Timeline Section -->
-  <section id="timeline">
-    <h2>Our Story</h2>
-    <div class="timeline-card">
+  <section id="timeline" aria-labelledby="timeline-heading">
+    <h2 id="timeline-heading">Our Story</h2>
+    <div class="timeline-card" tabindex="0" role="button" aria-label="Our First Moment">
       <h3>Our First Moment</h3>
       <p>When I saw your smile and knew you were special.</p>
       <p class="hidden-note">I miss you every day.</p>
     </div>
-    <div class="timeline-card">
+    <div class="timeline-card" tabindex="0" role="button" aria-label="A Special Day">
       <h3>A Special Day</h3>
       <p>When you showed me your kindness and stole my heart.</p>
       <p class="hidden-note">I'm so sorry for my mistakes.</p>
     </div>
-    <div class="timeline-card">
+    <div class="timeline-card" tabindex="0" role="button" aria-label="A Memory I Cherish">
       <h3>A Memory I Cherish</h3>
       <p>The way you laughed and made everything better.</p>
       <p class="hidden-note">Please give me a chance, babe.</p>
@@ -213,17 +251,17 @@
   </section>
 
   <!-- Gift Hub Section -->
-  <section id="gift-hub">
-    <h2>Surprise Box</h2>
-    <div class="surprise-card" id="surprise-1">
+  <section id="gift-hub" aria-labelledby="gift-hub-heading">
+    <h2 id="gift-hub-heading">Surprise Box</h2>
+    <div class="surprise-card" id="surprise-1" tabindex="0" role="button" aria-label="Why I Love You">
       <h3>Why I Love You</h3>
       <p>Your lips, your face, and how you treat me make my world brighter.</p>
     </div>
-    <div class="surprise-card" id="surprise-2">
+    <div class="surprise-card" id="surprise-2" tabindex="0" role="button" aria-label="Our Song">
       <h3>Our Song</h3>
       <p>Listen to "Sweet One" – it reminds me of you.</p>
     </div>
-    <div class="surprise-card" id="surprise-3">
+    <div class="surprise-card" id="surprise-3" tabindex="0" role="button" aria-label="Mini Quiz">
       <h3>Mini Quiz</h3>
       <p>What makes Odunayo so special? (Click to find out!)</p>
       <p class="hidden-note" style="display: none;">Everything about you, especially how you treat me!</p>
@@ -231,41 +269,49 @@
   </section>
 
   <!-- Dream Date Planner Section -->
-  <section id="dream-date">
-    <h2>Our Next Adventure</h2>
+  <section id="dream-date" aria-labelledby="dream-date-heading">
+    <h2 id="dream-date-heading">Our Next Adventure</h2>
     <p>Evening: Dinner at a cozy restaurant with your favorite food.</p>
     <p>Night: Stargazing under a blanket, just us.</p>
-    <form id="dream-date-form">
+    <form id="dream-date-form" aria-describedby="dream-date-message">
       <label for="dream-date-input">Your Dream Date Idea:</label><br>
-      <textarea id="dream-date-input" rows="4" cols="50" placeholder="Tell me your dream date..."></textarea><br>
+      <textarea id="dream-date-input" rows="4" cols="50" placeholder="Tell me your dream date..." aria-required="true"></textarea><br>
       <button type="submit">Save Idea</button>
-      <p class="form-message" id="dream-date-message"></p>
+      <p class="form-message" id="dream-date-message" role="alert"></p>
     </form>
   </section>
 
   <!-- Fan Page Section -->
-  <section id="fan-page">
-    <h2>Why Odunayo Is Amazing</h2>
+  <section id="fan-page" aria-labelledby="fan-page-heading">
+    <h2 id="fan-page-heading">Why Odunayo Is Amazing</h2>
     <ul>
       <li>Your lips: They light up my world with every smile.</li>
       <li>Your face: I could look at you forever and never get tired.</li>
       <li>How you treat me: Your kindness makes me want to be better.</li>
     </ul>
-    <form id="guestbook-form">
+    <form id="guestbook-form" aria-describedby="guestbook-message">
       <label for="guestbook-input">Leave a Note:</label><br>
-      <textarea id="guestbook-input" rows="4" cols="50" placeholder="Type a note to me..."></textarea><br>
+      <textarea id="guestbook-input" rows="4" cols="50" placeholder="Type a note to me..." aria-required="true"></textarea><br>
       <button type="submit">Submit Note</button>
-      <p class="form-message" id="guestbook-message"></p>
+      <p class="form-message" id="guestbook-message" role="alert"></p>
     </form>
   </section>
 
   <script>
+    // Loading Screen
+    window.addEventListener('load', () => {
+      const loadingScreen = document.getElementById('loading-screen');
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+      }, 2000); // 2-second loading screen
+    });
+
     // Typing Animation for Love Letter
     const typed = new Typed('#typed-output', {
       strings: [
         'To Odunayo, my heart, I love you and I’m so sorry for everything I’ve done wrong. I miss you every day and want to make things right. Please give me a chance, babe.'
       ],
-      typeSpeed: 50,
+      typeSpeed: 40, // Smoother typing speed
       startDelay: 500,
       showCursor: false,
       loop: false
@@ -275,14 +321,21 @@
     document.querySelectorAll('.surprise-card').forEach(card => {
       card.addEventListener('click', () => {
         confetti({
-          particleCount: 100,
-          spread: 70,
+          particleCount: 150, // Increased particles
+          spread: 80,
           origin: { y: 0.6 },
-          colors: ['#A855F7', '#3B82F6', '#F9EAFB']
+          colors: ['#A855F7', '#3B82F6', '#F9EAFB'],
+          disableForReducedMotion: true // Accessibility
         });
         if (card.id === 'surprise-3') {
           const hiddenNote = card.querySelector('.hidden-note');
           hiddenNote.style.display = 'block';
+        }
+      });
+      // Keyboard support
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          card.click();
         }
       });
     });
@@ -323,7 +376,7 @@
       }
     });
 
-    // Load Saved Form Data (if any)
+    // Load Saved Form Data
     window.addEventListener('load', () => {
       const savedDreamDate = localStorage.getItem('dreamDate');
       if (savedDreamDate) {
