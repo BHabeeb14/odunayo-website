@@ -11,61 +11,159 @@
   <!-- Canvas Confetti for surprise effects -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: 'Roboto', sans-serif;
       text-align: center;
       background: linear-gradient(to bottom, #DBEAFE, #A855F7);
       color: #fff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Falling Hearts Animation */
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255, 100, 100, 0.7)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+      background-size: contain;
+      animation: fall 10s linear infinite;
+      opacity: 0.7;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-20vh) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
     header {
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     h1 {
       font-family: 'Dancing Script', cursive;
-      font-size: 3em;
+      font-size: 3.5em;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #F9EAFB;
     }
     section {
-      padding: 20px;
+      padding: 40px 20px;
       margin: 20px auto;
       max-width: 800px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
     .button {
       display: inline-block;
-      padding: 10px 20px;
+      padding: 12px 24px;
       background: #3B82F6;
       color: #fff;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 8px;
       margin: 10px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button:hover {
+      background: #2563EB;
+      transform: scale(1.05);
     }
     .timeline-card, .surprise-card {
       background: rgba(255, 255, 255, 0.2);
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 5px;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .timeline-card:hover, .surprise-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    .timeline-card h3, .surprise-card h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8em;
+      color: #F9EAFB;
+    }
+    .timeline-card p, .surprise-card p {
+      font-size: 1.1em;
+      color: #E5E7EB;
     }
     form {
       margin-top: 20px;
     }
+    label {
+      font-size: 1.2em;
+      color: #F9EAFB;
+    }
     input, textarea {
-      padding: 10px;
-      margin: 5px;
-      border-radius: 5px;
+      width: 80%;
+      max-width: 500px;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
       border: none;
+      font-size: 1em;
+      background: rgba(255, 255, 255, 0.9);
+      color: #1F2937;
     }
     button {
-      padding: 10px 20px;
+      padding: 12px 24px;
       background: #3B82F6;
       color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2563EB;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #E5E7EB;
+    }
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      h1 { font-size: 2.5em; }
+      h2 { font-size: 2em; }
+      section { padding: 20px; }
+      .button, button { padding: 10px 20px; }
+      input, textarea { width: 90%; }
     }
   </style>
 </head>
 <body>
+  <div class="hearts">
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
+  </div>
   <header>
     <h1>To Odunayo, My Heart</h1>
   </header>
@@ -75,7 +173,7 @@
     <h2>A Message for You</h2>
     <div id="typed-output"></div>
     <a href="https://music.apple.com/ng/song/sweet-one/1538020509" target="_blank" class="button">Play "Sweet One" by Wizkid</a>
-   <a href="https://music.apple.com/ng/song/mrs-me/1400930740" target="_blank" class="button">Play "Mrs Me" by Nasty C</a>
+    <a href="https://music.apple.com/ng/song/mrs-me/1400930740" target="_blank" class="button">Play "Mrs Me" by Nasty C</a>
   </section>
 
   <!-- Timeline Section -->
